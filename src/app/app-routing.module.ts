@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
 import { HeroesModule } from './heroes/heroes.module';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
+import { authCanGuard, authMatchGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,9 @@ const routes: Routes = [
   },
   {
     path: 'heroes',
-    loadChildren: () => import('./heroes/heroes.module').then( modul => modul.HeroesModule )
+    loadChildren: () => import('./heroes/heroes.module').then( modul => modul.HeroesModule ),
+    canActivate: [authCanGuard],
+    canMatch: [authMatchGuard]
   },
   {
     path: '404',
